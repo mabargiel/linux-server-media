@@ -28,21 +28,6 @@ services:
       - 9117:9117
     restart: unless-stopped
 
-  sonarr:
-    image: "linuxserver/sonarr:${TAG}"
-    container_name: sonarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/Warsaw
-    volumes:
-      - /media/nas/raspberry/sonarr/config:/config
-      - /media/nas/video/anime:/tv
-      - /media/nas/video/torrents/downloading:/downloads
-    ports:
-      - 8989:8989
-    restart: unless-stopped
-
   transmission:
     image: "linuxserver/transmission:${TAG}"
     container_name: transmission
@@ -59,4 +44,23 @@ services:
       - 9091:9091
       - 51413:51413
       - 51413:51413/udp
+    restart: unless-stopped
+
+  sonarr:
+    image: "linuxserver/sonarr:${TAG}"
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Warsaw
+    volumes:
+      - /media/nas/raspberry/sonarr/config:/config
+      - /media/nas/video/anime:/tv
+      - /media/nas/video/torrents/downloading:/downloads
+      - /media/nas/video/torrents/watch:/watch
+    depends_on:
+      - transmission
+      - jackett
+    ports:
+      - 8989:8989
     restart: unless-stopped
