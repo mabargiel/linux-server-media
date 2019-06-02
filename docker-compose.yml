@@ -1,20 +1,5 @@
 version: "2"
 services:
-  plex:
-    image: "linuxserver/plex:${TAG}"
-    container_name: plex
-    network_mode: host
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - VERSION=docker
-    volumes:
-      - /usr/local/bin/rpi-media-as-code/plex/config:/config
-      - /media/nas/video/anime:/tvshows
-      - /media/nas/video/movies:/movies
-      - /media/nas/video/transcoding:/transcode
-    restart: unless-stopped
-
   jackett:
     image: "linuxserver/jackett:${TAG}"
     container_name: jackett
