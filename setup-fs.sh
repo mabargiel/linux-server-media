@@ -6,4 +6,3 @@ mkdir -p /media/nas/video/torrents/{downloading,backups,watch,completed}
 mkdir -p /usr/local/bin/rpi-media-as-code/{jackett,sonarr,transmission}/config
 
 echo "Initialized missing directories"
-git 
