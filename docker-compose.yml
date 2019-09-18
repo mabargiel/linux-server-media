@@ -1,7 +1,7 @@
 version: "2"
 services:
   jackett:
-    image: "linuxserver/jackett:${TAG}"
+    image: "linuxserver/jackett:arm32v7-latest"
     container_name: jackett
     environment:
       - PUID=1000
@@ -9,13 +9,13 @@ services:
       - TZ=Europe/Warsaw
     volumes:
       - /usr/local/bin/rpi-media-as-code/jackett/config:/config
-      - /media/nas/video/torrents/downloading:/downloads
+      - /usr/local/bin/rpi-media-as-code/torrents/downloading:/downloads
     ports:
       - 9117:9117
     restart: unless-stopped
 
   transmission:
-    image: "linuxserver/transmission:${TAG}"
+    image: "linuxserver/transmission:arm32v7-latest"
     container_name: transmission
     environment:
       - PUID=1000
@@ -24,8 +24,8 @@ services:
       - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
     volumes:
       - /usr/local/bin/rpi-media-as-code/transmission/config:/config
-      - /media/nas/video/torrents/downloading:/downloads
-      - /media/nas/video/torrents/watch:/watch
+      - /usr/local/bin/rpi-media-as-code/torrents/downloading:/downloads
+      - /usr/local/bin/rpi-media-as-code/torrents/watch:/watch
     ports:
       - 9091:9091
       - 51413:51413
@@ -33,7 +33,7 @@ services:
     restart: unless-stopped
 
   sonarr:
-    image: "linuxserver/sonarr:${TAG}"
+    image: "linuxserver/sonarr:arm32v7-latest"
     container_name: sonarr
     environment:
       - PUID=1000
@@ -42,8 +42,8 @@ services:
     volumes:
       - /usr/local/bin/rpi-media-as-code/sonarr/config:/config
       - /media/nas/video/anime:/tv
-      - /media/nas/video/torrents/downloading:/downloads
-      - /media/nas/video/torrents/watch:/watch
+      - /usr/local/bin/rpi-media-as-code/torrents/downloading:/downloads
+      - /usr/local/bin/rpi-media-as-code/torrents/watch:/watch
     depends_on:
       - transmission
       - jackett
