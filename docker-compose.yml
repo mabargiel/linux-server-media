@@ -41,7 +41,7 @@ services:
       - TZ=Europe/Warsaw
     volumes:
       - /usr/local/bin/rpi-media-as-code/sonarr/config:/config
-      - /media/nas/video/anime:/tv
+      - /media/nas/anime:/tv
       - /usr/local/bin/rpi-media-as-code/torrents/downloading:/downloads
       - /usr/local/bin/rpi-media-as-code/torrents/watch:/watch
     depends_on:
