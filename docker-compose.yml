@@ -1,21 +1,21 @@
 version: "2"
 services:
   jackett:
-    image: "linuxserver/jackett:arm32v7-latest"
+    image: "linuxserver/jackett:amd64-latest"
     container_name: jackett
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Warsaw
     volumes:
-      - /usr/local/bin/rpi-media-as-code/jackett/config:/config
-      - /usr/local/bin/rpi-media-as-code/torrents/downloading:/downloads
+      - /usr/local/bin/media/jackett/config:/config
+      - /usr/local/bin/media/torrents/downloading:/downloads
     ports:
       - 9117:9117
-    restart: unless-stopped
+    restart: always
 
   transmission:
-    image: "linuxserver/transmission:arm32v7-latest"
+    image: "linuxserver/transmission:amd64-latest"
     container_name: transmission
     environment:
       - PUID=1000
@@ -23,30 +23,44 @@ services:
       - TZ=Europe/Warsaw
       - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
     volumes:
-      - /usr/local/bin/rpi-media-as-code/transmission/config:/config
-      - /usr/local/bin/rpi-media-as-code/torrents/downloading:/downloads
-      - /usr/local/bin/rpi-media-as-code/torrents/watch:/watch
+      - /usr/local/bin/media/transmission/config:/config
+      - /usr/local/bin/media/torrents/downloading:/downloads
+      - /usr/local/bin/media/torrents/watch:/watch
     ports:
       - 9091:9091
       - 51413:51413
       - 51413:51413/udp
-    restart: unless-stopped
+    restart: always
 
   sonarr:
-    image: "linuxserver/sonarr:arm32v7-latest"
+    image: "linuxserver/sonarr:amd64-latest"
     container_name: sonarr
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Warsaw
     volumes:
-      - /usr/local/bin/rpi-media-as-code/sonarr/config:/config
+      - /usr/local/bin/media/sonarr/config:/config
       - /media/nas/anime:/tv
-      - /usr/local/bin/rpi-media-as-code/torrents/downloading:/downloads
-      - /usr/local/bin/rpi-media-as-code/torrents/watch:/watch
+      - /usr/local/bin/media/torrents/downloading:/downloads
+      - /usr/local/bin/media/torrents/watch:/watch
     depends_on:
       - transmission
       - jackett
     ports:
       - 8989:8989
-    restart: unless-stopped
+    restart: always
+    
+  plex:
+    image: ghcr.io/linuxserver/plex
+    container_name: plex
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - VERSION=docker
+      - UMASK_SET=022 #optional
+      - PLEX_CLAIM= #optional
+    volumes:
+      - /media/nas/anime:/tv
+    restart: always
