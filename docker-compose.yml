@@ -8,8 +8,8 @@ services:
       - PGID=1000
       - TZ=Europe/Warsaw
     volumes:
-      - ${CONFIG_PATH}/jackett/config:/config
-      - ${CONFIG_PATH}/torrents/downloading:/downloads
+      - /srv/dev-disk-by-label-media/nas/jackett/config:/config
+      - /srv/dev-disk-by-label-media/nas/torrents/downloading:/downloads
     ports:
       - 9117:9117
     restart: always
@@ -23,9 +23,9 @@ services:
       - TZ=Europe/Warsaw
       - TRANSMISSION_WEB_HOME=/combustion-release/ #optional
     volumes:
-      - ${CONFIG_PATH}/transmission/config:/config
-      - ${CONFIG_PATH}/media/torrents/downloading:/downloads
-      - ${CONFIG_PATH}/media/torrents/watch:/watch
+      - /srv/dev-disk-by-label-media/nas/transmission/config:/config
+      - /srv/dev-disk-by-label-media/nas/media/torrents/downloading:/downloads
+      - /srv/dev-disk-by-label-media/nas/media/torrents/watch:/watch
     ports:
       - 9091:9091
       - 51413:51413
@@ -40,10 +40,10 @@ services:
       - PGID=1000
       - TZ=Europe/Warsaw
     volumes:
-      - ${CONFIG_PATH}/sonarr/config:/config
+      - /srv/dev-disk-by-label-media/nas/sonarr/config:/config
       - ${TV_PATH}:/tv
-      - ${CONFIG_PATH}/torrents/downloading:/downloads
-      - ${CONFIG_PATH}/torrents/watch:/watch
+      - /srv/dev-disk-by-label-media/nas/torrents/downloading:/downloads
+      - /srv/dev-disk-by-label-media/nas/torrents/watch:/watch
     depends_on:
       - transmission
       - jackett
